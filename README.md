@@ -82,12 +82,13 @@ for ex: mysql, mariadb etc.
 - To run the server execute
 ```
 npm run dev
+```
+
 
 
 
 
 *--------------*
-```
 -To perform DB oparation run this code ,
 ```
 npx sequelize init
