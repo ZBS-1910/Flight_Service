@@ -82,4 +82,20 @@ for ex: mysql, mariadb etc.
 - To run the server execute
 ```
 npm run dev
+
+
+
+
+*--------------*
+```
+-To perform DB oparation run this code ,
+```
+npx sequelize init
+```
+-To create table `airplanes` in the database run this code
+```
+npx sequelize model:generate --name Airplane --attributes modelNumber:string,capacity:integer --force
+```
+```
+npx sequelize db:migrate   
 ```
