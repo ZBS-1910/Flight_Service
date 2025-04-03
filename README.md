@@ -1,102 +1,113 @@
-This is a base node project template, which anyone can use as it has been prepared, by keeping some of the most important code principles and project management recomendations. Feel free to change anything.
+# Airplane Service Project 
 
-`src` ->i Inside the src folder all the actuat source code regarding the project will reside, this will not include any kind of tests. (You might want to make separate tests folder)
+This is a base Node.js project template, which anyone can use as it has been prepared by keeping some of the most important code principles and project management recommendations. Feel free to change anything as per your requirements.
 
-Lets take a took inside the `src` folder
-`config` -> In this folder anything  and everything regarding any configurations of setup of a library or module will be done. For example: setting up `dotenv`.
-so that we can use the environment variables anywhere in a cleaner fashion, this is done in the `server-config.js`.
+## Project Structure
 
-One more example can be to setup you logging library that can help you to prepare meaningful logs, so configuration for this library should also be done here.
+### `src` Folder
+Inside the `src` folder, all the actual source code related to the project will reside. This will not include any tests. (You might want to create a separate `tests` folder.)
 
-`routes` -> In the routes folder, we register a route and the corresponding middleware and controllers to it.
+Let's take a look inside the `src` folder:
 
-`middlewares` —> they are just going to intercept the incoming requests where we can write our validators, authenticators etc.
+- **`config`** → This folder contains all configurations related to setting up libraries or modules. For example, setting up `dotenv` to use environment variables in a cleaner fashion is done in `server-config.js`. Another example is configuring a logging library for meaningful logs.
 
-`controllers` —> they are kind Of the last middlewares as post them you call you business layer to execute the budiness logic. In controllers we just receive the incoming requests and data and then pass it to the business layer, and once business layer returns an output, we structure the API response in controllers and send the output. 
+- **`routes`** → This folder registers routes and their corresponding middleware and controllers.
 
-`repositories` -> this folder contains all the logic using which we interact the
-DB by writing queries, the raw queries or ORM queries wilt go here.
+- **`middlewares`** → These intercept incoming requests where we can write validators, authenticators, etc.
 
-`services` -> contains the buiness logic and interacts with repositories for data
-from the database.
+- **`controllers`** → These act as the last middleware before calling the business layer to execute business logic. Controllers receive incoming requests and data, pass it to the business layer, and structure the API response before sending it back.
 
-`utils`-> contains helper methods, error classes etc.
+- **`repositories`** → This folder contains all the logic for interacting with the database, including raw queries or ORM queries.
 
-### Setup the Projects
+- **`services`** → This contains business logic and interacts with repositories to fetch data from the database.
 
-- Download this template from github and open it in your favourite text editor.
--Go inside the folder path and exceute the following command:
-  ````
-  npm install 
-  ````
-- In the root directory create a .env file and add the following env variables
-  
-    ```
-      PORT=<port number of your choice>
-    ```
-ex:
-    ```
-      PORT=3000
-    ```
+- **`utils`** → This folder contains helper methods, error classes, and other utilities.
 
-inside the `src/config` folder create a file aname as config.jason and write the following code:
+## Setup the Project
 
-```
-{
-  "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
+1. Download this template from GitHub and open it in your favorite text editor.
+2. Navigate to the project folder and execute the following command:
+   ```sh
+   npm install 
+   ```
+3. In the root directory, create a `.env` file and add the following environment variables:
+   ```env
+   PORT=<port number of your choice>
+   ```
+   Example:
+   ```env
+   PORT=3000
+   ```
 
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
+4. Inside the `src/config` folder, create a file named `config.json` and add the following code:
+   ```json
+   {
+     "development": {
+       "username": "root",
+       "password": null, // Db-password
+       "database": "database_development",//Db-name
+       "host": "127.0.0.1",
+       "dialect": "mysql"
+     },
+     "test": {
+       "username": "root",
+       "password": null,
+       "database": "database_test",
+       "host": "127.0.0.1",
+       "dialect": "mysql"
+     },
+     "production": {
+       "username": "root",
+       "password": null,
+       "database": "database_production",
+       "host": "127.0.0.1",
+       "dialect": "mysql"
+     }
+   }
+   ```
 
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  }
-}
-```
-- go inside the `src` folder and execute the following command:
-  ```
-  npx sequelize init
-  ```
--by excecuting above code you will get migrations ande seeders folder along with a congig.json inside the config folder.
+5. Navigate inside the `src` folder and execute the following command to initialize Sequelize:
+   ```sh
+   npx sequelize init
+   ```
+   This will create `migrations` and `seeders` folders along with a `config.json` inside the `config` folder.
 
-- If you; re setting up your development environment,then write the username of your db, password Of your db and in dialect mention whatever db you are using 
-for ex: mysql, mariadb etc.
+6. If you're setting up your development environment, update `config.json` with your database credentials, including username, password, and dialect (e.g., MySQL, MariaDB, etc.).
 
--If you're setting up test or prod environment, make sure you also replace the host with the hosted db url.
+7. If you're setting up a test or production environment, ensure that the `host` field is updated with your hosted database URL.
 
-- To run the server execute
-```
-npm run dev
-```
+8. To run the server, execute:
+   ```sh
+   npm run dev
+   ```
 
 
 
 
 
-*--------------*
--To perform DB oparation run this code ,
+
+1. Initialize Sequelize
+
+Run the following command to initialize Sequelize in your project. This will generate the necessary configuration files for database connection and models.
 ```
 npx sequelize init
 ```
--To create table `airplanes` in the database run this code
+2. Create a Database
+
+This command will create the database specified in your config/config.json file.
+```
+npx sequelize db:create
+```
+3. Create a Model and Migration for the airplanes Table
+
+Use this command to generate a Sequelize model named Airplane with the specified attributes (modelNumber as a string and capacity as an integer). The --force flag ensures that any existing model with the same name will be replaced.
 ```
 npx sequelize model:generate --name Airplane --attributes modelNumber:string,capacity:integer --force
 ```
+4. Migrate the Changes to the Database
+
+To apply the model and update the database schema, run the migration command. This ensures that the airplanes table is created in the database.
 ```
-npx sequelize db:migrate   
+npx sequelize db:migrate
 ```
+
