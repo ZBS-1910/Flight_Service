@@ -8,13 +8,9 @@ class CurdRepository {
   //create, read, update, delete
   //create a new CRUD record
   async create(data) {
-    try {
       const response = await this.model.create(data);
       return response;
-    } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:create ");
-      throw error;
-    }
+    
   }
   //destroy a record in CRUD
   async destroy(data) {
