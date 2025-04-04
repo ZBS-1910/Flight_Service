@@ -5,6 +5,7 @@ const AppError = require('../utils/errors/app_error');
 
 const airplaneRepository = new AirplaneRepository();
 
+// to create a new airplane data
 async function createAirplane(data) {
     try {
         const airplane = await airplaneRepository.create(data);
@@ -25,8 +26,8 @@ async function createAirplane(data) {
     }
 }
 
-
-async function getAirplane() {
+// to get all the airplanes data
+async function getAirplanes() {
     try{
         const airplances=await airplaneRepository.getAll();
         return airplances;
@@ -35,8 +36,21 @@ async function getAirplane() {
     }
 }
 
+// to get a single airplane data
+async function getAirplane(id) {
+    try{
+        const airplane=await airplaneRepository.get(id);
+        return airplane;
+    }catch(error){
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError('The airplane you rested is not present',error.statusCode)
+        }
+        throw new AppError('Cannot fetch data of the airport',id,StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 
 module.exports = {
      createAirplane,
+     getAirplanes,
      getAirplane
     };

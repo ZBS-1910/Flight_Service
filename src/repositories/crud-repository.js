@@ -1,5 +1,6 @@
-const { where } = require("sequelize");
+const {StatusCodes}=require('http-status-codes')
 const { Logger } = require("../config");
+const AppError = require("../utils/errors/app_error");
 class CurdRepository {
   constructor(model) {
     this.model = model;
@@ -8,43 +9,30 @@ class CurdRepository {
   //create, read, update, delete
   //create a new CRUD record
   async create(data) {
-      const response = await this.model.create(data);
-      return response;
-    
+    const response = await this.model.create(data);
+    return response;
   }
   //destroy a record in CRUD
   async destroy(data) {
-    try {
-      const response = await this.model.destroy({
-        where: {
-          id: data,
-        },
-      });
-      return response;
-    } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:destroy ");
-      throw error;
-    }
+    const response = await this.model.destroy({
+      where: {
+        id: data,
+      }
+    });
+    return response;
   }
   //get a record in CRUD
   async get(data) {
-    try {
-      const response = await this.model.findByPk(data);
-      return response;
-    } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:get ");
-      throw error;
+    const response = await this.model.findByPk(data);
+    if(!response){
+      throw new AppError("Not anle to found the resource",StatusCodes.NOT_FOUND)
     }
+    return response;
   }
   //get all records in CRUD
   async getAll(data) {
-    try {
-      const response = await this.model.findAll();
-      return response;
-    } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:getAll ");
-      throw error;
-    }
+    const response = await this.model.findAll();
+    return response;
   }
   //update a record in CRUD
   async update(data, id) {
@@ -56,7 +44,7 @@ class CurdRepository {
       });
       return response;
     } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:update ");
+      Logger.error("Somthing  went wrong in the CRUD Repo:update "); 
       throw error;
     }
   }
