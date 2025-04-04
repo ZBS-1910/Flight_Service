@@ -19,5 +19,8 @@ router.get('/',
 router.get('/:id', 
     AirplaneController.getAirplane);
 
+    router.delete('/:id', 
+        AirplaneController.destroyAirplanes);
+    
     
 module.exports= router; 

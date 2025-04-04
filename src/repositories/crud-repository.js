@@ -1,4 +1,4 @@
-const {StatusCodes}=require('http-status-codes')
+const { StatusCodes } = require("http-status-codes");
 const { Logger } = require("../config");
 const AppError = require("../utils/errors/app_error");
 class CurdRepository {
@@ -17,15 +17,24 @@ class CurdRepository {
     const response = await this.model.destroy({
       where: {
         id: data,
-      }
+      },
     });
+    if (!response) {
+      throw new AppError(
+        "Not anle to found the resource",
+        StatusCodes.NOT_FOUND
+      );
+    }
     return response;
   }
   //get a record in CRUD
   async get(data) {
     const response = await this.model.findByPk(data);
-    if(!response){
-      throw new AppError("Not anle to found the resource",StatusCodes.NOT_FOUND)
+    if (!response) {
+      throw new AppError(
+        "Not anle to found the resource",
+        StatusCodes.NOT_FOUND
+      );
     }
     return response;
   }
@@ -44,7 +53,7 @@ class CurdRepository {
       });
       return response;
     } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:update "); 
+      Logger.error("Somthing  went wrong in the CRUD Repo:update ");
       throw error;
     }
   }
