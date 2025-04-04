@@ -32,7 +32,7 @@ class CurdRepository {
     const response = await this.model.findByPk(data);
     if (!response) {
       throw new AppError(
-        "Not anle to found the resource",
+        "Not able to found the resource",
         StatusCodes.NOT_FOUND
       );
     }
@@ -43,20 +43,24 @@ class CurdRepository {
     const response = await this.model.findAll();
     return response;
   }
+
+
   //update a record in CRUD
-  async update(data, id) {
-    try {
-      const response = await this.model.update(data, {
-        where: {
-          id: id,
-        },
-      });
-      return response;
-    } catch (error) {
-      Logger.error("Somthing  went wrong in the CRUD Repo:update ");
-      throw error;
-    }
+  
+async update(data, id) {
+  const [updatedRows] = await this.model.update(data, { where: { id } });
+
+  if (updatedRows === 0) {
+    throw new AppError("Airplane not found", StatusCodes.NOT_FOUND);
   }
+  const response = await this.model.findByPk(id);
+
+  return response;
 }
+  }
+  
+
+
+
 module.exports = CurdRepository;
 //CRUD operations
