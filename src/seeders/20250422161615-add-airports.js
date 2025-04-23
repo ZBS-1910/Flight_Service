@@ -1,3 +1,4 @@
+
 'use strict';
 
 module.exports = {
@@ -50,3 +51,4 @@ module.exports = {
     await queryInterface.bulkDelete('Airports', null, {});
   }
 };
+

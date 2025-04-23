@@ -13,24 +13,30 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.Flight, {
         foreignKey: 'airplaneId',
-        onDelete: 'CASCADE',
+        onDelete: 'CASCADE'
       });
-    } 
+      // this.hasMany(models.Seat, {
+      //   foreignKey: 'airplaneId',
+      //   onDelete: 'CASCADE'
+      // });
+    }
   }
   Airplane.init({
-    modelNumber:{
+    modelNumber: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isAlphanumeric: true,
+      }
     },
-    capacity:{
+    capacity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
       validate: {
-        max:1000,
+        max: 1000
       }
-    },
-    
+    }
   }, {
     sequelize,
     modelName: 'Airplane',

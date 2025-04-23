@@ -99,7 +99,9 @@ async function getAllFlights(query) {
         return flights;
 
     } catch (error) {
+        console.log("got error inflight-service",error);
         console.error("Flight fetch error:", error);
+
         throw new AppError('Could not retrieve flight data', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
