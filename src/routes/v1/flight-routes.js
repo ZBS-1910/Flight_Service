@@ -8,15 +8,25 @@ const router = express.Router();
 // /api/v1/flights POST
 router.post('/', 
         FlightMiddlewares.validateCreate,
-        FlightController.createFlight);
+        FlightController.createFlight );
 
 // api/v1/flights?trips=MUB_BLR  GET 
 router.get('/',
-        FlightController.getAllFlights);
+        FlightController.getAllFlights );
 
 // /api/v1/flights/:id GET
-
 router.get('/:id',
-        FlightController.getFlight);
+        FlightController.getFlight );
  
+// /api/v1/flights/:id/seats PATCH
+router.patch('/:id/seats',
+        FlightMiddlewares.validateUpdateSeatsRequest,
+        FlightController.updateSeats );
+
+
+
+
+
+
+
 module.exports = router;
