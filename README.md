@@ -1,4 +1,4 @@
-# Airplane Service Project 
+# Flight Service Project 
 
 This is a base Node.js project template, which anyone can use as it has been prepared by keeping some of the most important code principles and project management recommendations. Feel free to change anything as per your requirements.
 
